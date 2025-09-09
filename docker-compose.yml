@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  # ... (db service commented out as per your previous setup)
+
+  # Backend Service
+  backend:
+    build: ./backend
+    restart: always
+    environment:
+      - PORT
+      - DATABASE_URL
+      - JWT_SECRET
+      - OPENROUTER_API_KEY
+      - origins
+    env_file:
+      - ./backend/.env
+    ports:
+      - "3002:3002"
+    depends_on:
+      - frontend
+
+  # Frontend Service
+  frontend:
+    build: ./frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      # This variable tells the frontend where to find the backend
+      - VITE_API_BASE_URL=http://backend:3002 
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
