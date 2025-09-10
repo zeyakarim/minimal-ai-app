@@ -1,6 +1,6 @@
 # Minimal AI Customer Support Agent
 
-![AI Chat Agent Banner](https://via.placeholder.com/1200x400/5267E8/FFFFFF?text=AI+Customer+Support+Agent)
+![AI Chat Agent Banner](https://openrouter.ai/)
 _A scalable and intelligent customer support solution powered by AI_
 
 ## Table of Contents
@@ -57,10 +57,10 @@ The application follows a standard client-server architecture, with a clear sepa
 
 ```mermaid
 graph TD
-    A[User/Browser] -- HTTP/S --> B(Frontend - React/Vite)
-    B -- API Calls (Axios) --> C(Backend - Node.js/Express)
-    C -- ORM (Sequelize) --> D(Database - PostgreSQL)
-    C -- LLM API Calls --> E(OpenRouter AI Service)
+    A[User/Browser] -- "HTTP/S" --> B("Frontend - React/Vite")
+    B -- "API Calls (Axios)" --> C("Backend - Node.js/Express")
+    C -- "ORM (Sequelize)" --> D("Database - PostgreSQL")
+    C -- "LLM API Calls" --> E("OpenRouter AI Service")
 Backend (Node.js/Express/TypeScript)
 The backend is a RESTful API built with Node.js, Express, and TypeScript. It handles user authentication, manages chat sessions, communicates with the AI service (OpenRouter), and interacts with the PostgreSQL database.
 
