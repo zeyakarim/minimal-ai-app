@@ -43,23 +43,11 @@ This project is built with a focus on scalability, maintainability, and develope
 -   **Containerized Development:** Full Docker Compose setup for easy local development and consistent environments.
 -   **Type-Safe Development:** End-to-end type safety using TypeScript.
 
+
+
 ## Architecture
 
 The application follows a standard client-server architecture, with a clear separation of concerns between the frontend, backend, and database layers.
-
-```mermaid
-graph TD
-    A[User/Browser] -- "HTTP/S" --> B["Frontend - React/Vite"]
-    B -- "API Calls (Axios)" --> C["Backend - Node.js/Express/TypeScript"]
-    C -- "ORM (Sequelize)" --> D["Database - PostgreSQL"]
-    C -- "LLM API Calls" --> E["OpenRouter AI Service"]
-<img width="1514" height="1434" alt="project-architecture" src="https://github.com/user-attachments/assets/23a3e35f-fbc0-4a95-8a25-24ddb9e1ea41" />
-<img width="2816" height="1824" alt="backend-architechture" src="https://github.com/user-attachments/assets/40354105-5356-4d13-9e23-8e1cc6897749" />
-
-<img width="847" height="2146" alt="database-architechture" src="https://github.com/user-attachments/assets/a5456d62-fe5b-4c3c-9ef6-ed733099fda2" />
-
-<img width="3237" height="1713" alt="api-flow-sequence" src="https://github.com/user-attachments/assets/370ed8e3-c08d-49e5-bd71-10f8f1c73690" />
-
 
 Backend (Node.js/Express/TypeScript)
 The backend is a RESTful API built with Node.js, Express, and TypeScript. It handles user authentication, manages chat sessions, communicates with the AI service (OpenRouter), and interacts with the PostgreSQL database.
@@ -307,10 +295,17 @@ GET /chat/history: Retrieve the user's chat history. (Requires JWT)
 Response: { success: true, data: [{ id, role, content, createdAt }] }
 
 Deployment
-For production deployment, consider platforms like:
 
-Frontend: Vercel, Netlify
+Frontend: Vercel (https://minimal-ai-app.vercel.app)
 
-Backend: Render, Railway, AWS ECS/EC2, Google Cloud Run
+Backend: Render (https://minimal-ai-app.onrender.com)
 
 Database: AWS RDS (as currently configured), Google Cloud SQL, Azure Database for PostgreSQL
+
+
+```mermaid
+graph TD
+    A[User/Browser] -- "HTTP/S" --> B["Frontend - React/Vite"]
+    B -- "API Calls (Axios)" --> C["Backend - Node.js/Express/TypeScript"]
+    C -- "ORM (Sequelize)" --> D["Database - PostgreSQL"]
+    C -- "LLM API Calls" --> E["OpenRouter AI Service"]
