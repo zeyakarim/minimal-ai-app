@@ -1,0 +1,49 @@
+# -----------------------------------------
+# Node.js / Backend
+# -----------------------------------------
+node_modules/
+dist/
+build/
+coverage/
+.env
+.env.local
+.env.*.local
+npm-debug.log*
+*.log
+
+# Typescript
+*.tsbuildinfo
+
+# -----------------------------------------
+# React / Frontend (Vite or CRA)
+# -----------------------------------------
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.env
+
+# Vite cache
+frontend/.vite/
+
+# -----------------------------------------
+# Database / Sequelize
+# -----------------------------------------
+/backend/migrations/*.js
+/backend/seeders/*.js
+/backend/models/*.js
+/tmp/
+*.sqlite
+*.db
+
+# Postgres dump files
+*.sql
+*.dump
+
+# -----------------------------------------
+# Docker
+# -----------------------------------------
+/data/
+docker-compose.override.yml
+*.pid
+*.seed
+*.bak
