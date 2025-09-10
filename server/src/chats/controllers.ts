@@ -18,7 +18,6 @@ export const sendMessage = async (req: AuthRequest, res: Response) => {
     try {
         const userId = req?.user!.id;
         await Chats.create({ userId, role: 'user', content: message });
-        console.log(process.env.OPENROUTER_API_KEY,'process.env.OPENROUTER_API_KEY')
 
         const openRouterResponse = await axios.post(
             'https://openrouter.ai/api/v1/chat/completions',
@@ -33,8 +32,6 @@ export const sendMessage = async (req: AuthRequest, res: Response) => {
                 },
             }
         );
-
-        console.log(openRouterResponse,'openRouterResponse')
 
         const aiMessage = openRouterResponse.data.choices[0].message.content;
         await Chats.create({ userId, role: 'assistant', content: aiMessage });
