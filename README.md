@@ -1,6 +1,6 @@
 # Minimal AI Customer Support Agent
 
-![AI Chat Agent Banner](https://via.placeholder.com/1200x400/5267E8/FFFFFF?text=AI+Customer+Support+Agent)
+![AI Chat Agent Banner](https://minimal-ai-app.vercel.app/)
 _A scalable and intelligent customer support solution powered by AI._
 
 ## Table of Contents
@@ -105,6 +105,7 @@ Docker Desktop (includes Docker Engine and Docker Compose)
 Git
 
 Environment Variables
+```
 Both the backend and frontend require specific environment variables to function correctly.
 
 backend/.env
@@ -132,6 +133,7 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+```
 Local Development (with Docker Compose)
 This is the recommended way to run the project locally, as it ensures consistency and simplifies setup.
 
@@ -150,6 +152,7 @@ YAML
 
 version: '3.8'
 
+```yaml
 services:
   # The 'db' service is commented out because your DATABASE_URL points to an external database (your RDS instance).
   # If you wanted a local PostgreSQL instance, you would uncomment this and adjust DATABASE_URL in backend/.env
@@ -164,7 +167,6 @@ services:
   #     - postgres_data:/var/lib/postgresql/data
   #   ports:
   #     - "5432:5432"
-
   backend:
     build: ./backend
     restart: always
@@ -194,6 +196,8 @@ services:
 
 volumes:
   postgres_data:
+```
+
 4. Build and Run Services
 From the project root directory, run:
 
