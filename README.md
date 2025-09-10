@@ -1,30 +1,22 @@
 # Minimal AI Customer Support Agent
 
-![AI Chat Agent Banner](https://openrouter.ai/)
-_A scalable and intelligent customer support solution powered by AI_
+![AI Chat Agent Banner](https://via.placeholder.com/1200x400/5267E8/FFFFFF?text=AI+Customer+Support+Agent)
+_A scalable and intelligent customer support solution powered by AI._
 
 ## Table of Contents
 
 - [Minimal AI Customer Support Agent](#minimal-ai-customer-support-agent)
-  - [Table of Contents](#table-of-contents)
   - [Project Overview](#project-overview)
   - [Features](#features)
   - [Architecture](#architecture)
-    - [Backend (Node.js/Express/TypeScript)](#backend-nodejsexpresstypescript)
-    - [Frontend (React/TypeScript/Vite/Tailwind CSS)](#frontend-reacttypescriptvitetailwin-css)
+    - [Backend (Node.js/Express/TypeScript)](#backend-nodejs expresstypescript)
+    - [Frontend (React/TypeScript/Vite/Tailwind CSS)](#frontend-reacttypescriptvitetailwind-css)
     - [Database (PostgreSQL)](#database-postgresql)
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Environment Variables](#environment-variables)
     - [Local Development (with Docker Compose)](#local-development-with-docker-compose)
-      - [1. Clone the repository](#1-clone-the-repository)
-      - [2. Create `.env` files](#2-create-env-files)
-      - [3. Configure `docker-compose.yml`](#3-configure-docker-composeyml)
-      - [4. Build and Run Services](#4-build-and-run-services)
-      - [5. Access the Application](#5-access-the-application)
     - [Running Without Docker (Development)](#running-without-docker-development)
-      - [Backend](#server)
-      - [Frontend](#client)
   - [API Endpoints](#api-endpoints)
     - [Authentication](#authentication)
     - [Chat](#chat)
@@ -58,9 +50,10 @@ The application follows a standard client-server architecture, with a clear sepa
 ```mermaid
 graph TD
     A[User/Browser] -- "HTTP/S" --> B("Frontend - React/Vite")
-    B -- "API Calls (Axios)" --> C("Backend - Node.js/Express")
+    B -- "API Calls (Axios)" --> C("Backend - Node.js/Express/TypeScript")
     C -- "ORM (Sequelize)" --> D("Database - PostgreSQL")
     C -- "LLM API Calls" --> E("OpenRouter AI Service")
+
 Backend (Node.js/Express/TypeScript)
 The backend is a RESTful API built with Node.js, Express, and TypeScript. It handles user authentication, manages chat sessions, communicates with the AI service (OpenRouter), and interacts with the PostgreSQL database.
 
