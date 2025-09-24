@@ -8,7 +8,7 @@ dotenv.config({ path: ".env" });
 
 const origins = JSON.parse(
     process.env.origins ||
-    '["http://localhost:3000", "http://localhost:3001", "http://localhost:5173"]'
+    '["http://localhost:3000", "http://localhost:3001", "http://localhost:5173", "https://minimal-ai-app.vercel.app", "https://minimal-ai-app.onrender.com"]'
 );
 
 const app = express();
