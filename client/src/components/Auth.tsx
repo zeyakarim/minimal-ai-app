@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { useLoginMutation, useSignupMutation } from '../api/authApis'; // Adjust path if necessary
-import InputField from './InputField'; // Import the new InputField component
+import { useState, useEffect } from 'react';
+import { useLoginMutation, useSignupMutation } from '../api/authApis'; 
+import InputField from './InputField'; 
 import toast from 'react-hot-toast';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 interface AuthProps {
     onAuthSuccess: (token: string) => void;
@@ -12,6 +13,8 @@ const Auth: React.FC<AuthProps> = ({ onAuthSuccess }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [localError, setLocalError] = useState<string | null>(null);
 
     const { 
         mutate: loginMutation, 
@@ -27,23 +30,34 @@ const Auth: React.FC<AuthProps> = ({ onAuthSuccess }) => {
         error: signUpError 
     } = useSignupMutation();
 
-    // Determine current error message
-    const currentError = isLoginError
+    // Compute API error
+    const apiError = isLoginError
         ? loginError?.response?.data?.message || "Login failed. Please check your credentials."
         : isSignUpError
             ? signUpError?.response?.data?.message || "Signup failed. Please try again."
             : null;
 
+    // Always prefer local error reset
+    const currentError = localError ?? apiError;
+
+    // Clear error when user types
+    useEffect(() => {
+        if (email || password || username) {
+            setLocalError(null);
+        }
+    }, [email, password, username]);
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (isLogin) {
             loginMutation({ email, password }, {
-                 onSuccess: (token: any) => {
+                onSuccess: (token: any) => {
                     toast.success("Login successful!");
                     onAuthSuccess(token as string);
                 },
                 onError: (error: any) => {
-                    toast.error(error.message || "Login failed");
+                    setLocalError(error.response.data.message || error.message);
+                    toast.error(error.response.data.message || "Login failed");
                 }
             });
         } else {
@@ -51,12 +65,13 @@ const Auth: React.FC<AuthProps> = ({ onAuthSuccess }) => {
                 onSuccess: () => {
                     toast.success("Signup successful! Please log in.");
                     setIsLogin(true);
-                    setPassword('')
+                    setPassword('');
                     setEmail('');
                     setUsername('');
                 },
                 onError: (error: any) => {
-                    console.log(error,'error')
+                    console.error(error,'error');
+                    setLocalError(error.message || "Signup failed");
                     toast.error(error.message || "Signup failed");
                 }
             });
@@ -65,13 +80,11 @@ const Auth: React.FC<AuthProps> = ({ onAuthSuccess }) => {
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
-            <div
-                className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-xl transform transition-all duration-300 ease-out sm:scale-100"
-            >
-                <h2 className="text-3xl font-extrabold text-center text-gray-900 transition-colors duration-300">
+            <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-xl">
+                <h2 className="text-3xl font-extrabold text-center text-gray-900">
                     {isLogin ? 'Welcome Back!' : 'Join Us Today!'}
                 </h2>
-                <p className="text-center text-gray-600 text-sm transition-colors duration-300">
+                <p className="text-center text-gray-600 text-sm">
                     {isLogin ? 'Log in to access your account' : 'Create an account to get started'}
                 </p>
 
@@ -100,19 +113,30 @@ const Auth: React.FC<AuthProps> = ({ onAuthSuccess }) => {
                             autoComplete="off"
                         />
                     )}
-                    <InputField
-                        id="password"
-                        label="Password"
-                        type="password"
-                        required
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="••••••••"
-                        disabled={isLoading || isSignUpLoading}
-                        autoComplete={isLogin ? "current-password" : "new-password"}
-                    />
 
-                    {/* Display API errors directly */}
+                    {/* Password field with eye icon */}
+                    <div className="relative">
+                        <InputField
+                            id="password"
+                            label="Password"
+                            type={showPassword ? "text" : "password"}
+                            required
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="••••••••"
+                            disabled={isLoading || isSignUpLoading}
+                            autoComplete={isLogin ? "current-password" : "new-password"}
+                        />
+                        <button
+                            type="button"
+                            className="absolute right-3 top-9 text-gray-500 hover:text-gray-700"
+                            onClick={() => setShowPassword(!showPassword)}
+                            tabIndex={-1}
+                        >
+                            {showPassword ? <FaEyeSlash /> : <FaEye />}
+                        </button>
+                    </div>
+
                     {currentError && (
                         <p className="text-red-500 text-sm text-center">
                             {currentError}
@@ -130,7 +154,9 @@ const Auth: React.FC<AuthProps> = ({ onAuthSuccess }) => {
                                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
                         ) : null}
-                        {isLoading || isSignUpLoading ? (isLogin ? 'Logging In...' : 'Signing Up...') : (isLogin ? 'Log In' : 'Sign Up')}
+                        {isLoading || isSignUpLoading 
+                            ? (isLogin ? 'Logging In...' : 'Signing Up...') 
+                            : (isLogin ? 'Log In' : 'Sign Up')}
                     </button>
                 </form>
 
